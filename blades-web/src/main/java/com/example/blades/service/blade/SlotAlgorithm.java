@@ -11,11 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-/**
- * @Author: 11102942
- * @Date: 2022/6/27
- * @Description:
- */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class SlotAlgorithm {
 

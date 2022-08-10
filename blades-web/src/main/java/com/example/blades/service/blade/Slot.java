@@ -2,11 +2,6 @@ package com.example.blades.service.blade;
 
 import lombok.Data;
 
-/**
- * @Author: 11102942
- * @Date: 2022/6/27
- * @Description:
- */
 @Data
 public class Slot {
 
