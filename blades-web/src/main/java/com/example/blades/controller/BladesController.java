@@ -1,6 +1,7 @@
 package com.example.blades.controller;
 
 import com.example.blades.common.BladeLevelType;
+import com.example.blades.response.ApiResponse;
 import com.example.blades.service.BladeDataParser;
 import com.example.blades.service.BladeService;
 import com.example.blades.service.blade.Blade;
@@ -28,14 +29,23 @@ public class BladesController {
     private BladeService bladeService;
 
     @PostMapping("/arrange")
-    public List<BladeSlotVO> arrange(MultipartFile multipartFile, String bladeType) {
-        List<Blade> blades = bladeDataParser.parse(multipartFile);
-        BladeLevelType bladeLevelType = BladeLevelType.parse(bladeType);
-        if (Objects.isNull(bladeLevelType)) {
-            throw new IllegalArgumentException("请输入合法的扇叶类型值！");
-        }
+    public ApiResponse<List<BladeSlotVO>> arrange(MultipartFile multipartFile, String bladeType) {
+        try {
+            BladeLevelType bladeLevelType = BladeLevelType.parse(bladeType);
+            if (Objects.isNull(bladeLevelType)) {
+                throw new IllegalArgumentException("请输入合法的扇叶类型值！");
+            }
 
-        List<Slot> slots = bladeService.arrange(blades, bladeLevelType);
-        return slots.stream().map(BladeSlotVO::format).collect(Collectors.toList());
+            List<Blade> blades = bladeDataParser.parse(multipartFile);
+            List<Slot> slots = bladeService.arrange(blades, bladeLevelType);
+            for (Slot slot : slots) {
+                slot.println();
+            }
+            List<BladeSlotVO> vos = slots.stream().map(BladeSlotVO::format).collect(Collectors.toList());
+            return ApiResponse.success(vos);
+        } catch (Exception e) {
+            String msg = e.getMessage();
+            return ApiResponse.error(msg);
+        }
     }
 }

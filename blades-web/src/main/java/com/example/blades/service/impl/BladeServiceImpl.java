@@ -17,7 +17,7 @@ public class BladeServiceImpl implements BladeService {
     public List<Slot> arrange(List<Blade> blades, BladeLevelType bladeLevelType) {
         boolean isValid = BladeChecker.isValid(blades, bladeLevelType);
         if (!isValid) {
-            throw new IllegalArgumentException("弯曲频率差值范围小于24，请输入合法差值范围数据");
+            throw new IllegalArgumentException("弯曲频率最小值与最大值的差值未满足阈值要求!");
         }
         return BladeLevelType.FIRST_LEVEL.equals(bladeLevelType)
                 ? SlotAlgorithm.firstLevel().run(blades)

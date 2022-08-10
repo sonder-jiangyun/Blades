@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 public class BladeExcelListener extends AnalysisEventListener<BladeExcelListener.BladeItem> {
@@ -27,8 +28,8 @@ public class BladeExcelListener extends AnalysisEventListener<BladeExcelListener
 
     private Blade format(BladeItem bladeItem) {
         String bladeName = bladeItem.getBladeName();
-        Integer wValue = bladeItem.getBladeValueW();
-        Integer zValue = bladeItem.getBladeValueZ();
+        int wValue = Objects.isNull(bladeItem.getBladeValueW()) ? 0 : bladeItem.getBladeValueW();
+        int zValue = Objects.isNull(bladeItem.getBladeValueZ()) ? 0 : bladeItem.getBladeValueZ();
 
         Blade blade = new Blade();
         blade.setName(bladeName);

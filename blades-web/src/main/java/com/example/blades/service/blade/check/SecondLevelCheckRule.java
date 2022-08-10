@@ -21,7 +21,7 @@ public class SecondLevelCheckRule extends AbstractCheckRule {
 
     @Override
     protected int getExpectedDistance(Slot slot) {
-        return Arrays.asList(1, 9, 19, 26).contains(slot.getIndex()) ? 15 : 9;
+        return Arrays.asList(1, 5, 6, 7, 9, 19, 26).contains(slot.getIndex()) ? 15 : 9;
     }
 
     @Override
