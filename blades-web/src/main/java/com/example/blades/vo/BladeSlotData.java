@@ -5,7 +5,7 @@ import com.example.blades.service.blade.Slot;
 import lombok.Data;
 
 @Data
-public class BladeSlotVO {
+public class BladeSlotData {
 
     /**
      * 扇叶槽编号
@@ -20,24 +20,24 @@ public class BladeSlotVO {
     /**
      * 弯曲频率
      */
-    private Integer wValue;
+    private Integer bending;
 
     /**
      * 震动频率
      */
-    private Integer zValue;
+    private Integer vibration;
 
     /**
      * 弯曲频率差（相邻槽扇叶的差的绝对值）
      */
-    private Integer wDistance;
+    private Integer bendingDistance;
 
     /**
      * 扭转频率差（相邻槽扇叶的差的绝对值）
      */
-    private Integer zDistance;
+    private Integer vibrationDistance;
 
-    public static BladeSlotVO format(Slot slot) {
+    public static BladeSlotData format(Slot slot) {
         Blade curBlade = slot.getBlade();
         String bladeName = curBlade.getName();
         int wValue = curBlade.getWValue();
@@ -49,13 +49,13 @@ public class BladeSlotVO {
         Integer wDistance = Math.abs(wValue - nextBlade.getWValue());
         Integer zDistance = Math.abs(zValue - nextBlade.getZValue());
 
-        BladeSlotVO vo = new BladeSlotVO();
+        BladeSlotData vo = new BladeSlotData();
         vo.setIndex(slot.getIndex() + 1);
         vo.setBladeName(bladeName);
-        vo.setWValue(wValue);
-        vo.setZValue(zValue);
-        vo.setWDistance(wDistance);
-        vo.setZDistance(zDistance);
+        vo.setBending(wValue);
+        vo.setVibration(zValue);
+        vo.setBendingDistance(wDistance);
+        vo.setVibrationDistance(zDistance);
         return vo;
     }
 

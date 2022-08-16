@@ -3,11 +3,7 @@ package com.example.blades.response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-/**
- * @Author: 11119824
- * @Date: 2022/8/10
- * @Description:
- */
+
 @Data
 @AllArgsConstructor
 public class ApiResponse<T> {
