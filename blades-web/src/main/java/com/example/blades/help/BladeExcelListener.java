@@ -30,11 +30,13 @@ public class BladeExcelListener extends AnalysisEventListener<BladeExcelListener
         String bladeName = bladeItem.getBladeName();
         int wValue = Objects.isNull(bladeItem.getBladeValueW()) ? 0 : bladeItem.getBladeValueW();
         int zValue = Objects.isNull(bladeItem.getBladeValueZ()) ? 0 : bladeItem.getBladeValueZ();
+        int wight = Objects.isNull(bladeItem.getBladeWight()) ? 0 : bladeItem.getBladeWight();
 
         Blade blade = new Blade();
         blade.setName(bladeName);
         blade.setWValue(wValue);
         blade.setZValue(zValue);
+        blade.setWight(wight);
         return blade;
     }
 
@@ -64,5 +66,12 @@ public class BladeExcelListener extends AnalysisEventListener<BladeExcelListener
          */
         @ExcelProperty(index = 3)
         private Integer bladeValueZ;
+
+
+        /**
+         * 扇叶质量
+         */
+        @ExcelProperty(index = 4)
+        private Integer bladeWight;
     }
 }

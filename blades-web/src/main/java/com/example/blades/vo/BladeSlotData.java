@@ -37,17 +37,38 @@ public class BladeSlotData {
      */
     private Integer vibrationDistance;
 
+    /**
+     * 扇叶质量
+     */
+    private Integer wight;
+
+    /**
+     * 区域扇叶质量和
+     */
+    private Integer wightSum;
+
     public static BladeSlotData format(Slot slot) {
         Blade curBlade = slot.getBlade();
         String bladeName = curBlade.getName();
         int wValue = curBlade.getWValue();
         int zValue = curBlade.getZValue();
+        int wight = curBlade.getWight();
 
 
         Slot nextSlot = slot.getNext();
         Blade nextBlade = nextSlot.getBlade();
-        Integer wDistance = Math.abs(wValue - nextBlade.getWValue());
-        Integer zDistance = Math.abs(zValue - nextBlade.getZValue());
+        int wDistance = Math.abs(wValue - nextBlade.getWValue());
+        int zDistance = Math.abs(zValue - nextBlade.getZValue());
+        int wightSum = 0;
+        if ((slot.getIndex() + 1) % 6 == 0) {
+            int count = 6;
+            Slot temp = slot;
+            while (count > 0) {
+                wightSum += temp.getBlade().getWight();
+                temp = temp.getPrev();
+                count--;
+            }
+        }
 
         BladeSlotData vo = new BladeSlotData();
         vo.setIndex(slot.getIndex() + 1);
@@ -56,6 +77,8 @@ public class BladeSlotData {
         vo.setVibration(zValue);
         vo.setBendingDistance(wDistance);
         vo.setVibrationDistance(zDistance);
+        vo.setWight(wight);
+        vo.setWightSum(wightSum);
         return vo;
     }
 

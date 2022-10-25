@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("/blades")
+@RequestMapping("/api/blades")
 public class BladesController {
 
     @Autowired
@@ -44,13 +44,10 @@ public class BladesController {
 
             List<Blade> blades = bladeDataParser.parse(multipartFile);
             List<Slot> slots = bladeService.arrange(blades, bladeLevelType);
-            for (Slot slot : slots) {
-                slot.println();
-            }
             List<BladeSlotData> vos = slots.stream().map(BladeSlotData::format).collect(Collectors.toList());
             return ApiResponse.success(vos);
         } catch (Exception e) {
-            String msg = e.getMessage();
+            String msg = e.getCause().getMessage();
             return ApiResponse.error(msg);
         }
     }

@@ -23,7 +23,4 @@ public class SecondLevelBladeExcelModel {
     @ExcelProperty("弯曲频率差值")
     private Integer bendingDistance;
 
-    @ColumnWidth(15)
-    @ExcelProperty("区域编码")
-    private String areaName;
 }

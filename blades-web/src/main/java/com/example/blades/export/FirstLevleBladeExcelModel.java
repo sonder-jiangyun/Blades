@@ -32,6 +32,11 @@ public class FirstLevleBladeExcelModel {
     private Integer vibrationDistance;
 
     @ColumnWidth(15)
-    @ExcelProperty("区域编码")
-    private String areaName;
+    @ExcelProperty("扇叶质量")
+    private Integer wight;
+
+    @ColumnWidth(15)
+    @ExcelProperty("区域扇叶质量和")
+    private Integer wightSum;
+
 }

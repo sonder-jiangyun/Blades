@@ -61,7 +61,10 @@ public class BladeExcelBuilder {
         WriteCellStyle contentWriteCellStyle = Styles.content();
         HorizontalCellStyleStrategy cellStyleStrategy = new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
 
-        return EasyExcel.write(outputStream).registerWriteHandler(cellStyleStrategy).build();
+        return EasyExcel
+                .write(outputStream)
+                .registerWriteHandler(cellStyleStrategy)
+                .build();
     }
 
 }
