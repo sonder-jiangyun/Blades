@@ -6,12 +6,14 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum BladeLevelType {
-    FIRST_LEVEL,
-    SECOND_LEVEL;
+    FIRST_LEVEL(24),
+    SECOND_LEVEL(34);
 
-    public static BladeLevelType parse(String bladeType) {
+    private Integer code;
+
+    public static BladeLevelType parse(Integer code) {
         for (BladeLevelType bladeLevelType : values()) {
-            if (bladeLevelType.name().equals(bladeType)) {
+            if (bladeLevelType.getCode().equals(code)) {
                 return bladeLevelType;
             }
         }

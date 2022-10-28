@@ -25,4 +25,10 @@ public class ApiResponse<T> {
         return new ApiResponse<>(10000, msg, null);
     }
 
+    public static <T> ApiResponse<T> error(Throwable e){
+        Throwable throwable = e.getCause() == null ? e : e.getCause();
+        String msg = String.format("%s: %s", throwable.getClass().getName(), throwable.getMessage());
+        return ApiResponse.error(msg);
+    }
+
 }

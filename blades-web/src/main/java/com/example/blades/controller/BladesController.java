@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Objects;
@@ -35,30 +34,35 @@ public class BladesController {
     private BladeService bladeService;
 
     @PostMapping("/arrange")
-    public ApiResponse<List<BladeSlotData>> arrange(MultipartFile multipartFile, String bladeType) {
+    public ApiResponse<List<BladeSlotData>> arrange(MultipartFile multipartFile) {
         try {
-            BladeLevelType bladeLevelType = BladeLevelType.parse(bladeType);
+            List<Blade> blades = bladeDataParser.parse(multipartFile);
+
+            BladeLevelType bladeLevelType = BladeLevelType.parse(blades.size());
             if (Objects.isNull(bladeLevelType)) {
                 throw new IllegalArgumentException("请输入合法的扇叶类型值！");
             }
 
-            List<Blade> blades = bladeDataParser.parse(multipartFile);
             List<Slot> slots = bladeService.arrange(blades, bladeLevelType);
             List<BladeSlotData> vos = slots.stream().map(BladeSlotData::format).collect(Collectors.toList());
             return ApiResponse.success(vos);
-        } catch (Exception e) {
-            String msg = e.getCause().getMessage();
-            return ApiResponse.error(msg);
+        } catch (Throwable e) {
+            return ApiResponse.error(e);
         }
     }
 
     @PostMapping("/export")
-    public ApiResponse export(@RequestBody BladeSlotParam bladeSlotParam, HttpServletResponse response) throws IOException {
-        List<BladeSlotData> bladeSlotDataList = bladeSlotParam.getBladeSlotDataList();
+    public ApiResponse export(@RequestBody BladeSlotParam bladeSlotParam, HttpServletResponse response) {
+        try {
+            List<BladeSlotData> bladeSlotDataList = bladeSlotParam.getBladeSlotDataList();
 
-        OutputStream outputStream = response.getOutputStream();
-        BladeExcelExportHelper bladeExcelExportHelper = new BladeExcelExportHelper();
-        bladeExcelExportHelper.doExport(bladeSlotDataList, outputStream);
-        return ApiResponse.success(null);
+            OutputStream outputStream = response.getOutputStream();
+            BladeExcelExportHelper bladeExcelExportHelper = new BladeExcelExportHelper();
+            bladeExcelExportHelper.doExport(bladeSlotDataList, outputStream);
+            return ApiResponse.success(null);
+        } catch (Throwable e) {
+            return ApiResponse.error(e);
+        }
+
     }
 }
